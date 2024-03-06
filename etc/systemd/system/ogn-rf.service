@@ -1,0 +1,15 @@
+[Unit]
+Description=Receive ogn/flarm data and write the raw data to a fifo
+After=network.target time-sync.target
+Before=ogn-decode.service
+
+[Service]
+User=root
+Type=forking
+WorkingDirectory=/opt/rtlsdr-ogn
+ExecStart=/usr/bin/tmux new-session -d -s lj '/opt/rtlsdr-ogn/ogn-rf /etc/rtlsdr-ogn/site.conf'
+#StandardInput=tty
+StandardOutput=console
+
+[Install]
+WantedBy=multi-user.target
